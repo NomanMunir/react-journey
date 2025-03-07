@@ -14,6 +14,13 @@ export default function Player({ name, symbol, isActive, onNameChange }) {
   function handleChange(e) {
     setPlayerName(e.target.value);
   }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      handleEditing();
+    }
+  }
+
   return (
     <li className={isActive ? 'active' : undefined}>
       <span className="player">
@@ -23,9 +30,15 @@ export default function Player({ name, symbol, isActive, onNameChange }) {
               <input
                 value={playerName}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 type="text" required />
             )
-            : (<span className="player-name">{playerName}</span>)
+            : (<span 
+              className="player-name" 
+              onClick={() => setIsEditing(true)}
+            >
+              {playerName}
+            </span>)
         }
         <span className="player-symbol">{symbol}</span>
       </span>
