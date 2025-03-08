@@ -19,8 +19,10 @@ This course covers:
 ## 📌 Progress Tracker
 ✔ Section 1: Introduction to React  
 ✔ Section 2: Understanding Components & Props  
-⬜ Section 3: State & Lifecycle  
-⬜ Section 4: React Router  
+✔ Section 3: React Core 
+✔ Section 4: Tic-Tac-toe 
+✔ Section 5: Essential Practice 
+⬜ Section 6: Styling React Components 
 
 ## 📜 Notes & Resources
 - [Official React Docs](https://react.dev/)
