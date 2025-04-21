@@ -9,7 +9,7 @@ export default function Question({ onSkipAnswer, onSelectAnswer, index }) {
     selectedAnswer: "",
     isCorrect: null,
   });
-  let timer = 10000;
+  let timer = 15000;
   if (answer.selectedAnswer) timer = 1000;
   if (answer.isCorrect !== null) timer = 2000;
   function handleSelectAnswer(answer) {
