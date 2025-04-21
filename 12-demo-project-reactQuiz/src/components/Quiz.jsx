@@ -1,37 +1,23 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import QUESTIONS from "../questions.js";
 import quizCompletedImg from "../assets/quiz-complete.png";
-import QuestionTimer from "./QuestionTimer.jsx";
+import Question from "./Question.jsx";
+import Summary from "./Summary.jsx";
 
 export default function Quiz({}) {
-  const shuffledAnswers = useRef();
-
   const [userAnswers, setUserAnswers] = useState([]);
-  const [answerState, setAnswerState] = useState("");
 
-  const questionIndex =
-    answerState === "" ? userAnswers.length : userAnswers.length - 1;
+  const questionIndex = userAnswers.length;
   const isQuizCompleted = userAnswers.length === QUESTIONS.length;
 
-  const handleSelectedAnswer = useCallback(
-    function handleSelectedAnswer(selectedAnswer) {
-      setAnswerState("answered");
-      setUserAnswers((prevAnswers) => {
-        return [...prevAnswers, selectedAnswer];
-      });
-
-      setTimeout(() => {
-        if (selectedAnswer === QUESTIONS[questionIndex].answers[0])
-          setAnswerState("correct");
-        else setAnswerState("wrong");
-
-        setTimeout(() => {
-          setAnswerState("");
-        }, 2000);
-      }, 1000);
-    },
-    [questionIndex]
-  );
+  const handleSelectedAnswer = useCallback(function handleSelectedAnswer(
+    selectedAnswer
+  ) {
+    setUserAnswers((prevAnswers) => {
+      return [...prevAnswers, selectedAnswer];
+    });
+  },
+  []);
 
   const handleTimeoutSkipQuestion = useCallback(
     () => handleSelectedAnswer(null),
@@ -39,27 +25,17 @@ export default function Quiz({}) {
   );
 
   if (isQuizCompleted) {
-    return (
-      <div id="summary">
-        <img src={quizCompletedImg} alt="Quiz compeleted image" />
-        <h2>Quiz Completed</h2>
-      </div>
-    );
+    return <Summary userAnswers={userAnswers} />;
   }
-
-  shuffledAnswers.current = [...QUESTIONS[questionIndex].answers];
-  shuffledAnswers.current.sort(() => Math.random() - 0.5);
 
   return (
     <div id="quiz">
-      <div id="question">
-        <QuestionTimer
-          key={questionIndex}
-          timeout={10000}
-          onTimeout={handleTimeoutSkipQuestion}
-        />
-        <h2>{QUESTIONS[questionIndex].text}</h2>
-      </div>
+      <Question
+        index={questionIndex}
+        key={questionIndex}
+        onSkipAnswer={handleTimeoutSkipQuestion}
+        onSelectAnswer={handleSelectedAnswer}
+      />
     </div>
   );
 }
