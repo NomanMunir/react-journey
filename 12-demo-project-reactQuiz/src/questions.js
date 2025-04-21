@@ -1,72 +1,79 @@
 export default [
   {
-    id: "q1",
-    text: "Which of the following definitions best describes React.js?",
+    id: "d1",
+    text: "Why did the scarecrow win an award?",
     answers: [
-      "A library to build user interfaces with help of declarative code.",
-      "A library for managing state in web applications.",
-      "A framework to build user interfaces with help of imperative code.",
-      "A library used for building mobile applications only.",
+      "Because he was outstanding in his field.", // ✅ Correct
+      "Because he scared away the competition.",
+      "Because he had a killer fashion sense.",
+      "Because his jokes were corny.",
     ],
+    correct: 0,
   },
   {
-    id: "q2",
-    text: "What purpose do React hooks serve?",
+    id: "d2",
+    text: "How do you organize a space party?",
     answers: [
-      "Enabling the use of state and other React features in functional components.",
-      "Creating responsive layouts in React applications.",
-      "Handling errors within the application.",
-      "Part of the Redux library for managing global state.",
+      "You planet.", // ✅ Correct
+      "You call NASA.",
+      "You send out cosmic invites.",
+      "You ask aliens to host.",
     ],
+    correct: 0,
   },
   {
-    id: "q3",
-    text: "Can you identify what JSX is?",
+    id: "d3",
+    text: "What do you call fake spaghetti?",
     answers: [
-      "A JavaScript extension that adds HTML-like syntax to JavaScript.",
-      "A JavaScript library for building dynamic user interfaces.",
-      "A specific HTML version that was explicitly created for React.",
-      "A tool for making HTTP requests in a React application.",
+      "An impasta.", // ✅ Correct
+      "Pasta la vista.",
+      "Ravioli knockoff.",
+      "A noodling con-artist.",
     ],
+    correct: 0,
   },
   {
-    id: "q4",
-    text: "What is the most common way to create a component in React?",
+    id: "d4",
+    text: "Why don’t skeletons fight each other?",
     answers: [
-      "By defining a JavaScript function that returns a renderable value.",
-      "By defining a custom HTML tag in JavaScript.",
-      "By creating a file with a .jsx extension.",
-      'By using the "new" keyword followed by the component name.',
+      "They don’t have the guts.", // ✅ Correct
+      "They’re bone-tired.",
+      "They prefer peaceful boning.",
+      "They're afraid of rattling the peace.",
     ],
+    correct: 0,
   },
   {
-    id: "q5",
-    text: 'What does the term "React state" imply?',
+    id: "d5",
+    text: "I only know 25 letters of the alphabet. Why?",
     answers: [
-      "An object in a component that holds values and may cause the component to render on change.",
-      "The lifecycle phase a React component is in.",
-      "The overall status of a React application, including all props and components.",
-      "A library for managing global state in React applications.",
+      "I don’t know y.", // ✅ Correct
+      "Z is too edgy.",
+      "I dropped the rest in soup.",
+      "Because my keyboard is broken.",
     ],
+    correct: 0,
   },
   {
-    id: "q6",
-    text: "How do you typically render list content in React apps?",
+    id: "d6",
+    text: "What’s orange and sounds like a parrot?",
     answers: [
-      "By using the map() method to iterate over an array of data and returning JSX.",
-      "By using the for() loop to iterate over an array of data and returning JSX.",
-      "By using the forEach() method to iterate over an array of data and returning JSX.",
-      "By using the loop() method to iterate over an array of data and returning JSX.",
+      "A carrot.", // ✅ Correct
+      "A tangerine tweet.",
+      "A squash screaming.",
+      "A sunburned crow.",
     ],
+    correct: 0,
   },
   {
-    id: "q7",
-    text: "Which approach can NOT be used to render content conditionally?",
+    id: "d7",
+    text: "Why can't you give Elsa a balloon?",
     answers: [
-      "Using a the #if template syntax.",
-      "Using a ternary operator.",
-      "Using the && operator.",
-      "Using an if-else statement.",
+      "Because she’ll let it go!", // ✅ Correct
+      "Because she’s snow-sensitive.",
+      "She already has enough air.",
+      "Balloon insurance is expensive in Arendelle.",
     ],
+    correct: 0,
   },
 ];
