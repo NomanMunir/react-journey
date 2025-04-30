@@ -1,6 +1,10 @@
 export default function Login() {
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("submit!");
+  }
   return (
-    <form>
+    <form onSubmit={(e) => handleSubmit(e)}>
       <h2>Login</h2>
 
       <div className="control-row">
