@@ -5,10 +5,24 @@ import { currencyFormatter } from "../util/formatting.js";
 import Input from "./UI/Input.jsx";
 import Button from "./UI/Button.jsx";
 import UserProgressContext from "./store/UserProgressContext.jsx";
+import useHttp from "./hooks/useHttp.js";
+import Error from "./UI/Error.jsx";
+import { useActionState } from "react";
 
-export default function Checkout({}) {
+const config = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
+export default function Checkout() {
   const cartCtx = useContext(CartContext);
   const userProgressCtx = useContext(UserProgressContext);
+  const { data, error, sendRequest, clearData } = useHttp(
+    "http://localhost:3000/orders",
+    config
+  );
 
   const cartTotal = cartCtx.items.reduce(
     (totalPrice, item) => totalPrice + +item.price,
@@ -18,11 +32,14 @@ export default function Checkout({}) {
   function handleCloseCheckout() {
     userProgressCtx.hideCheckout();
   }
+  function handleFinish() {
+    userProgressCtx.hideCheckout();
+    cartCtx.clearCart();
+    clearData();
+  }
 
-  async function handleOrderSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const formObject = Object.fromEntries(formData.entries());
+  async function checkoutAction(prevState, fd) {
+    const formObject = Object.fromEntries(fd.entries());
     const orderData = {
       order: {
         customer: {
@@ -51,27 +68,36 @@ export default function Checkout({}) {
       return;
     }
 
-    try {
-      const response = await fetch("http://localhost:3000/orders", {
-        method: "POST",
-        body: JSON.stringify(orderData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    await sendRequest(JSON.stringify(orderData));
+  }
 
-      if (!response.ok) {
-        throw new Error("Failed to submit order.");
-      }
+  const [formSate, formAction, isSending] = useActionState(
+    checkoutAction,
+    null
+  );
+  let actions = (
+    <>
+      <Button textOnly type="button" onClick={handleCloseCheckout}>
+        Close{" "}
+      </Button>
+      <Button type="submit">Submit Order</Button>
+    </>
+  );
+  if (isSending) actions = <span>Sending data...</span>;
 
-      const result = await response.json();
-      console.log(result);
-      alert("Order submitted successfully!");
-      userProgressCtx.hideCheckout();
-    } catch (error) {
-      console.error(error);
-      alert("An error occurred while submitting your order. Please try again.");
-    }
+  if (data && !error) {
+    return (
+      <Modal
+        open={userProgressCtx.progress === "checkout"}
+        onClose={handleFinish}
+      >
+        <h2>Success!</h2>
+        <p>Your order was submitted successfully.</p>
+        <p className="modal-actions">
+          <Button onClick={handleFinish}>Okay</Button>
+        </p>
+      </Modal>
+    );
   }
 
   return (
@@ -79,7 +105,7 @@ export default function Checkout({}) {
       open={userProgressCtx.progress === "checkout"}
       onClose={handleCloseCheckout}
     >
-      <form onSubmit={handleOrderSubmit}>
+      <form action={formAction}>
         <h2>Checkout</h2>
         <p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
         <Input label="Full Name" type="text" id="full-name" />
@@ -89,12 +115,9 @@ export default function Checkout({}) {
           <Input label="Postal-code" type="text" id="postal-code" />
           <Input label="City" type="text" id="city" />
         </div>
-        <p className="modal-actions">
-          <Button textOnly type="button" onClick={handleCloseCheckout}>
-            Close{" "}
-          </Button>
-          <Button type="submit">Submit Order</Button>
-        </p>
+        {error && <Error title="Error Sending Data." message={error} />}
+
+        <p className="modal-actions">{actions}</p>
       </form>
     </Modal>
   );
