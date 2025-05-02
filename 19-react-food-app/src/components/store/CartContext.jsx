@@ -20,23 +20,28 @@ function cartReducer(state, action) {
       };
       updatedItems[existingCartItemIndex] = updatedItem;
     } else updatedItems.push({ ...action.item, quantity: 1 });
-    return { ...state, item: updatedItems };
+
+    return { ...state, items: updatedItems };
   }
+
   if (action.type === "REMOVE_ITEM") {
     const existingCartItemIndex = state.items.findIndex(
       (item) => item.id === action.id
     );
-    const existingCartItem = state.items[existingCartItemIndex];
     const updatedItems = [...state.items];
-    if (existingCartItem.quantity > 1) {
-      const updatedItem = {
-        ...existingCartItem,
-        quantity: existingCartItem.quantity - 1,
-      };
-      updatedItems[existingCartItemIndex] = updatedItem;
-    } else updatedItems.splice(existingCartItemIndex, 1);
-    return { ...state, item: updatedItems };
+    if (existingCartItemIndex > -1) {
+      const existingCartItem = state.items[existingCartItemIndex];
+      if (existingCartItem.quantity > 1) {
+        const updatedItem = {
+          ...existingCartItem,
+          quantity: existingCartItem.quantity - 1,
+        };
+        updatedItems[existingCartItemIndex] = updatedItem;
+      } else updatedItems.splice(existingCartItemIndex, 1);
+    }
+    return { ...state, items: updatedItems };
   }
+
   return state;
 }
 
@@ -52,16 +57,19 @@ export function CartContextProvider({ children }) {
     });
   }
   function removeItem(id) {
-    type: "REMOVE_ITEM", id;
+    dispatchCartAction({
+      id,
+      type: "REMOVE_ITEM",
+    });
   }
 
-  const cartCOntext = {
+  const cartContext = {
     items: cartState.items,
     addItem,
     removeItem,
   };
   return (
-    <CartContext.Provider value={CartContext}>{children}</CartContext.Provider>
+    <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>
   );
 }
 
