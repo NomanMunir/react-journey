@@ -13,8 +13,8 @@ function App() {
       errorElement: <ErrorPage />,
       children: [
         { path: "/", element: <Home /> },
-        { path: "/products", element: <Products /> },
-        { path: "/products/:id", element: <ProductDetails /> },
+        { path: "products", element: <Products /> },
+        { path: "products/:id", element: <ProductDetails /> },
       ],
     },
   ]);

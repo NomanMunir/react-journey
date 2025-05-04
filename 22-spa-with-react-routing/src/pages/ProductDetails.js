@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 
 export default function ProductDetails() {
   const params = useParams();
@@ -6,7 +6,9 @@ export default function ProductDetails() {
   return (
     <>
       <h1>Product Details for id: {params.id}</h1>
-      <p></p>
+      <Link to=".." relative="path">
+        back
+      </Link>
     </>
   );
 }
