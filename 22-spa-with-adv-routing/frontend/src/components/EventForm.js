@@ -1,5 +1,6 @@
 import {
   Form,
+  redirect,
   useActionData,
   useNavigate,
   useNavigation,
@@ -18,7 +19,7 @@ function EventForm({ method, event }) {
   }
 
   return (
-    <Form method="post" className={classes.form}>
+    <Form method={method} className={classes.form}>
       {data && data.errors && (
         <ul>
           {Object.values(data.errors).map((err) => (
@@ -79,3 +80,37 @@ function EventForm({ method, event }) {
 }
 
 export default EventForm;
+
+export const action = async ({ request, params }) => {
+  const formdata = await request.formData();
+  const eventData = {
+    title: formdata.get("title"),
+    image: formdata.get("image"),
+    date: formdata.get("date"),
+    description: formdata.get("description"),
+  };
+
+  let url = "http://localhost:8080/events/";
+  if (request.method === "PATCH") {
+    const id = params.id;
+    url = "http://localhost:8080/events/" + id;
+  }
+
+  const response = await fetch(url, {
+    method: request.method,
+    body: JSON.stringify(eventData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.status === 422) {
+    return response;
+  }
+  if (!response.ok) {
+    throw new Response(JSON.stringify({ message: "Could not send request!" }), {
+      status: 500,
+    });
+  }
+
+  return redirect("/events");
+};
