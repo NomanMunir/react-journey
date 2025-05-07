@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import classes from "./EventForm.module.css";
-import { getToken } from "../util/auth";
+import { getAuthToken } from "../util/auth";
 
 function EventForm({ method, event }) {
   const data = useActionData();
@@ -106,7 +106,7 @@ export async function action({ request, params }) {
     method: method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + getToken(),
+      Authorization: "Bearer " + getAuthToken(),
     },
     body: JSON.stringify(eventData),
   });

@@ -3,7 +3,7 @@ import { useRouteLoaderData, json, redirect, Await } from "react-router-dom";
 
 import EventItem from "../components/EventItem";
 import EventsList from "../components/EventsList";
-import { getToken } from "../util/auth";
+import { getAuthToken } from "../util/auth";
 
 function EventDetailPage() {
   const { event, events } = useRouteLoaderData("event-detail");
@@ -45,7 +45,7 @@ async function loadEvent(id) {
 async function loadEvents() {
   const response = await fetch("http://localhost:8080/events", {
     headers: {
-      Authorization: "Bearer " + getToken(),
+      Authorization: "Bearer " + getAuthToken(),
     },
   });
 
@@ -80,7 +80,7 @@ export async function action({ params, request }) {
   const response = await fetch("http://localhost:8080/events/" + eventId, {
     method: request.method,
     headers: {
-      Authorization: "Bearer " + getToken(),
+      Authorization: "Bearer " + getAuthToken(),
     },
   });
 
