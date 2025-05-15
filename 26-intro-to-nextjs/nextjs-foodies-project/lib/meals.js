@@ -40,7 +40,7 @@ export async function saveMeal(meal) {
       @creator,
       @creator_email,
       @image,
-      @slug,
+      @slug
     )
     `
   ).run(meal);
