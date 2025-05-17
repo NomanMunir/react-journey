@@ -1,3 +1,5 @@
+**/node_modules/
+
 # Ignore node_modules folder everywhere
 /*/node_modules/
 
@@ -8,7 +10,13 @@ build/
 # Ignore environment files (e.g., sensitive info or config)
 .env
 .env.local
-
+# Ignore Next.js specific files and folders
+**/.next/
+**/out/
+*/out/
+*/.next/
+*/*/.next
+*/*/*/.next
 # Ignore logs
 *.log
 logs/
