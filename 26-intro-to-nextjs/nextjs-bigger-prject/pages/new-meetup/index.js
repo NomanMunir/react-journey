@@ -17,6 +17,13 @@ export default function NewMeetupPage() {
   }
   return (
     <>
+      <Head>
+        <title>Add a new meetup</title>
+        <meta
+          name="description"
+          content="Add your own meetups and create amazing netwrking oppurtunities."
+        />
+      </Head>
       <NewMeetupForm onAddMeetup={addMeetupHandler} />
     </>
   );
