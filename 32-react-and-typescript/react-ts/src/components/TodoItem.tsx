@@ -1,6 +1,6 @@
 
 import React from "react";
-import Todo from "../models/todo";
+import Todo from "./models/todo";
 import classes from "./TodoItem.module.css"
 
 

@@ -1,5 +1,5 @@
 import './App.css';
-import Todo from './models/todo';
+import Todo from './components/models/todo';
 import Todos from './components/Todos';
 import NewTodo from './components/NewTodo';
 import { useState } from 'react';
